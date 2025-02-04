@@ -67,6 +67,6 @@ python main.py
 4. Push to the branch
 5. Create a new Pull Request
 
-## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+
+![Screenshot 2025-02-04 202351](https://github.com/user-attachments/assets/ef995051-0dba-4c71-8335-4a8da8b89480)
