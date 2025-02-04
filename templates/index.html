@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="card">
+            <div class="card-body">
+                <div class="text-center mb-4">
+                    <i class="bi bi-graph-up-arrow display-4 text-info mb-3"></i>
+                    <h2 class="card-title">Facebook Page Insights</h2>
+                    <p class="card-text text-muted">Analyze and track Facebook page performance metrics in real-time</p>
+                </div>
+
+                <form method="GET" action="{{ url_for('api.get_page', username='') }}" class="mb-4">
+                    <div class="input-group">
+                        <span class="input-group-text bg-transparent border-0">
+                            <i class="bi bi-search text-info"></i>
+                        </span>
+                        <input type="text" name="username" class="form-control" placeholder="Enter page username (e.g., boat.lifestyle)" required>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-arrow-right me-2"></i>Analyze
+                        </button>
+                    </div>
+                </form>
+
+                <div class="filter-section mt-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="bi bi-funnel-fill text-info me-2"></i>
+                        <h3 class="mb-0">Filter Pages</h3>
+                    </div>
+                    <form method="GET" action="{{ url_for('api.get_pages') }}" class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">
+                                <i class="bi bi-type text-muted me-1"></i>Name
+                            </label>
+                            <input type="text" name="name" class="form-control" placeholder="Search by name">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">
+                                <i class="bi bi-tags text-muted me-1"></i>Category
+                            </label>
+                            <input type="text" name="category" class="form-control" placeholder="Filter by category">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">
+                                <i class="bi bi-people text-muted me-1"></i>Min Followers
+                            </label>
+                            <input type="number" name="min_followers" class="form-control" placeholder="Minimum followers">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">
+                                <i class="bi bi-people-fill text-muted me-1"></i>Max Followers
+                            </label>
+                            <input type="number" name="max_followers" class="form-control" placeholder="Maximum followers">
+                        </div>
+                        <div class="col-12 text-center">
+                            <button type="submit" class="btn btn-secondary">
+                                <i class="bi bi-filter me-2"></i>Apply Filters
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="results">
+                    {% if page %}
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center mb-3">
+                                    <i class="bi bi-facebook text-info me-2"></i>
+                                    <h4 class="mb-0">{{ page.name }}</h4>
+                                </div>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <p>
+                                            <i class="bi bi-tag text-muted me-2"></i>
+                                            <strong>Category:</strong> 
+                                            <span class="stats-highlight">{{ page.category }}</span>
+                                        </p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>
+                                            <i class="bi bi-people text-muted me-2"></i>
+                                            <strong>Followers:</strong> 
+                                            <span class="stats-highlight">{{ page.follower_count }}</span>
+                                        </p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>
+                                            <i class="bi bi-globe text-muted me-2"></i>
+                                            <strong>Website:</strong> 
+                                            <a href="{{ page.website }}" class="text-info">{{ page.website }}</a>
+                                        </p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>
+                                            <i class="bi bi-envelope text-muted me-2"></i>
+                                            <strong>Email:</strong> 
+                                            <span class="text-info">{{ page.email }}</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {% if page.posts %}
+                            <h4 class="mb-3">
+                                <i class="bi bi-collection text-info me-2"></i>Recent Posts
+                            </h4>
+                            {% for post in page.posts[:10] %}
+                                <div class="post-card">
+                                    <p class="mb-3">{{ post.content }}</p>
+                                    <div class="d-flex justify-content-between align-items-center text-muted">
+                                        <small>
+                                            <i class="bi bi-clock me-1"></i>
+                                            {{ post.created_at|datetime }}
+                                        </small>
+                                        <div>
+                                            <span class="me-3">
+                                                <i class="bi bi-heart text-danger me-1"></i>
+                                                {{ post.likes_count }}
+                                            </span>
+                                            <span class="me-3">
+                                                <i class="bi bi-chat text-info me-1"></i>
+                                                {{ post.comments|length }}
+                                            </span>
+                                            <span>
+                                                <i class="bi bi-share me-1"></i>
+                                                {{ post.shares_count }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endif %}
+
+                    {% if pages %}
+                        <h4 class="mb-3">
+                            <i class="bi bi-search text-info me-2"></i>Search Results
+                        </h4>
+                        {% for page in pages %}
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h5 class="mb-0">{{ page.name }}</h5>
+                                        <a href="{{ url_for('api.get_page', username=page.username) }}" 
+                                           class="btn btn-primary btn-sm">
+                                            <i class="bi bi-eye me-1"></i>View Details
+                                        </a>
+                                    </div>
+                                    <div class="mt-3">
+                                        <span class="me-3">
+                                            <i class="bi bi-tag text-muted me-1"></i>
+                                            {{ page.category }}
+                                        </span>
+                                        <span>
+                                            <i class="bi bi-people text-muted me-1"></i>
+                                            {{ page.follower_count }} followers
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

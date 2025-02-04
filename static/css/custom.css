@@ -1,0 +1,138 @@
+:root {
+    --gradient-primary: linear-gradient(135deg, #0d6efd 0%, #0dcaf0 100%);
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+}
+
+.navbar {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    background: var(--gradient-primary);
+    padding: 1rem 0;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.brand-text {
+    color: #fff;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+.card {
+    border-radius: 15px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(0,0,0,0.1);
+    background: #ffffff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.card-title {
+    color: #0d6efd;
+    font-weight: 600;
+}
+
+.input-group {
+    margin-bottom: 1.5rem;
+}
+
+.input-group .form-control {
+    border-radius: 10px 0 0 10px;
+    border: 1px solid rgba(0,0,0,0.1);
+}
+
+.input-group .btn {
+    border-radius: 0 10px 10px 0;
+    padding: 0.5rem 1.5rem;
+}
+
+.btn-primary {
+    background: var(--gradient-primary);
+    border: none;
+    font-weight: 500;
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+    border: none;
+}
+
+#results {
+    margin-top: 2rem;
+}
+
+.post-card {
+    background: #fff;
+    margin-bottom: 1rem;
+    padding: 1.5rem;
+    border-radius: 10px;
+    border: 1px solid rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.footer {
+    background: var(--gradient-primary);
+    margin-top: auto;
+    color: white;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.card, .post-card {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Stats highlighting */
+.stats-highlight {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #0d6efd;
+}
+
+/* Filter section styling */
+.filter-section {
+    background: #f8f9fa;
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    border: 1px solid rgba(0,0,0,0.1);
+}
+
+.form-label {
+    color: #0d6efd;
+    font-weight: 500;
+}
+
+/* Icon colors */
+.text-info {
+    color: #0dcaf0 !important;
+}
+
+.text-muted {
+    color: #6c757d !important;
+}
+
+/* Navbar text color */
+.navbar-light .navbar-nav .nav-link {
+    color: rgba(255,255,255,0.9);
+}
+
+.navbar-light .navbar-nav .nav-link:hover {
+    color: #fff;
+}
